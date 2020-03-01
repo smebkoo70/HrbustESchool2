@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#242258"
+        android:gravity="right|center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bt_send"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:background="#000000"
+            android:text="发表"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/ed_tiezi_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="标题" />
+
+    <EditText
+        android:id="@+id/ed_tiezi_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:gravity="top"
+        android:hint="内容" />
+
+</LinearLayout>
