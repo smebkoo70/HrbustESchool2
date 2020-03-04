@@ -43,6 +43,7 @@
     <string name="title">标题</string>
     <string name="content">内容</string>
     <string name="section">版块:</string>
+    <string name="rempwd">记住密码</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
