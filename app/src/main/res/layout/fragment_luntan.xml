@@ -29,7 +29,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="280dp"
-        android:layout_marginLeft="280dp"
+        android:layout_marginLeft="240dp"
         android:layout_marginBottom="91dp"
         android:background="@drawable/btn_bg_round_click"
         android:text="发帖"
