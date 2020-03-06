@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hrbusteschool.Activity.InvitationActivity;
 import com.example.hrbusteschool.Activity.SendPostActivity;
+import com.example.hrbusteschool.Activity.TestNavBarActivity;
 import com.example.hrbusteschool.Adapter.MyListAdapter;
 import com.example.hrbusteschool.R;
 
@@ -117,6 +118,7 @@ public class LuntanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent AddPostIntent = new Intent(getActivity(), SendPostActivity.class);
+                //Intent AddPostIntent = new Intent(getActivity(), TestNavBarActivity.class);
                 startActivity(AddPostIntent);
             }
         });

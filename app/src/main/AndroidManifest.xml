@@ -13,6 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.TestNavBarActivity"></activity>
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/btn_bg_round_click" />

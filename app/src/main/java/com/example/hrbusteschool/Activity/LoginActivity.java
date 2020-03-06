@@ -12,9 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.hrbusteschool.Class.WebServiceGet;
 import com.example.hrbusteschool.R;
 
@@ -46,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences pref;
 
     private SharedPreferences.Editor editor;
-
+    private String userNameValue,passwordValue;
     private final int LOGINSUCCESS=0;
     private final int LOGINNOTFOUND=1;
     private final int LOGINEXCEPT=2;
@@ -97,10 +95,12 @@ public class LoginActivity extends AppCompatActivity {
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isRemember = pref.getBoolean("rememberbox",false);
+
         //当点击了记住密码后执行下面的步骤
         if(isRemember){
             remname = pref.getString("usernameStr","");
             rempwd = pref.getString("passwordStr","");
+
             usertextview.setText(remname);
             pwdtextview.setText(rempwd);
             rembox.setChecked(true);
@@ -166,7 +166,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void run() {
             infoString = WebServiceGet.executeHttpGet(usertextview.getText().toString(),passwordStr,"LogLet");//获取服务器返回的数据
-
+            userNameValue = usertextview.getText().toString();
+            passwordValue = pwdtextview.getText().toString();
             //更新UI，使用runOnUiThread()方法
             showResponse(infoString);
         }
@@ -185,9 +186,10 @@ public class LoginActivity extends AppCompatActivity {
                         /*editor.putBoolean("rememberbox", true);
                         editor.putString("usernameStr", remname);
                         editor.putString("passwordStr", rempwd);*/
-                        editor.putBoolean("rememberbox", true);
-                        editor.putString("remname", usernameStr);
-                        editor.putString("rempwd", passwordStr);
+                        //editor.putBoolean("rememberbox", true);
+                        editor.putString("usernameStr", userNameValue);
+                        editor.putString("passwordStr", passwordValue);
+                        editor.commit();
                     } else {
                         editor.clear();
                     }
