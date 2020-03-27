@@ -18,9 +18,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hrbusteschool.Activity.InvitationActivity;
 import com.example.hrbusteschool.Activity.SendPostActivity;
-import com.example.hrbusteschool.Activity.TestNavBarActivity;
 import com.example.hrbusteschool.Adapter.MyListAdapter;
+import com.example.hrbusteschool.WebClass.PostQueryGet;
 import com.example.hrbusteschool.R;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.lang.Runnable;
 
 
 /**
@@ -40,8 +46,10 @@ public class LuntanFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String infoString;
     private Context mcontext;
     private ListView listView;
+
     public String title;
     private Button AddPostButton;
     View view;
@@ -114,6 +122,8 @@ public class LuntanFragment extends Fragment {
                 startActivity(newInvitation);
             }
         });
+        //new Thread(new InitThread()).start();
+        //new Thread(new MyThread()).start();
         AddPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,4 +174,75 @@ public class LuntanFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    public class InitThread implements Runnable   {
+        @Override
+        public void run()
+        {
+            try {
+                ///为应用程序加载驱动
+                Class.forName("com.mysql.jdbc.Driver");
+                //使用JDBC_URL来标识特定的数据库
+                String driver_url = "jdbc:mysql://49.233.85.114:3306/android1?characterEncoding=utf-8&serverTimezone=UTC";
+                //String driver_url = "jdbc:mysql://localhost:3306/android1?characterEncoding=utf-8&serverTimezone=UTC";
+
+                //接收数据库的URL,数据库用户名，用户口令，即连接数据库
+                Connection conn = DriverManager.getConnection(driver_url, "root", "qwe123789");
+                //Connection conn = DriverManager.getConnection(driver_url, "root", "");
+
+                //将要执行的SQL语句
+
+                //String sql = "select count(*) from post";//本句解读为从course表中（即，from course）查找所用数据，限制条件为（where后面为限制条件）user_id = ?
+                String sql = "select count(*) from userinfo";
+                //PreparedStatement用于执行带或不带参数的预编译SQL语句
+                PreparedStatement psmt = conn.prepareStatement(sql);
+                //调用setString方法给sql中的第一个问号赋值，这里x为变量。即查找course表中限制条件为表中的user_id = x的所有行，所以返回的结果就是course_id = x 的所用行数据。如有两个数据就再加一行为psmt.setString(2, y),y为变量
+                //psmt.setString(1, x);
+                //psmt.setInt();
+                //返回PreparedStatement语句执行的结果
+                ResultSet rs = psmt.executeQuery();
+                //从rs结果集中取到想要的结果，rs.next()表示指针指向结果集的下一行。一开始为第一行
+                while (rs.next()) {
+                    //通过rs的get方法得到指针指向当前行的user_id字段对应的值
+                    //user_id = rs.getInt("user_id");
+                    myListAdapter.PostItemNum = rs.getInt(1);
+                    Toast toast = Toast.makeText(getActivity(),myListAdapter.PostItemNum,Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    public class MyThread implements Runnable {
+        @Override
+        public void run() {
+            infoString = PostQueryGet.executeHttpGet("QueryPostLet");//获取服务器返回的数据
+
+            //更新UI，使用runOnUiThread()方法
+            showResponse(infoString);
+        }
+    }
+
+
+    private void showResponse(final String response) {
+        getActivity().runOnUiThread(new Runnable() {
+            //更新UI
+            @Override
+            public void run() {
+                if (response.equals("-1")) {
+                    Toast.makeText(getActivity().getApplicationContext(), "查询失败!", Toast.LENGTH_SHORT).show();
+                } else {
+                    //info.setText(response);
+                    Toast.makeText(getActivity().getApplicationContext(), "查询成功！", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+            }
+        });
+    }
+
 }

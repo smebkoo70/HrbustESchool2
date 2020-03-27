@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hrbusteschool.Class.CodeUtils;
-import com.example.hrbusteschool.Class.RegisterGet;
+import com.example.hrbusteschool.WebClass.RegisterGet;
 import com.example.hrbusteschool.R;
 
 import java.security.MessageDigest;
@@ -208,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         //设置子线程，分别进行Get和Post传输数据
                         new Thread(new MyThread()).start();
-
+                        //Toast.makeText(RegisterActivity.this, infoString, Toast.LENGTH_SHORT).show();
 
 
                     } catch (Exception e) {
@@ -227,6 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void run() {
             infoString = RegisterGet.executeHttpGet(editTextUsername.getText().toString(), pwdstr, editTextTel.getText().toString(), sexstr, "RegLet");//获取服务器返回的数据
 
+
             //更新UI，使用runOnUiThread()方法
             showResponse(infoString);
         }
@@ -242,6 +243,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     //info.setText(response);
                     Toast.makeText(RegisterActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
+
 
                 }
                 dialog.dismiss();

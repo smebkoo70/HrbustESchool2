@@ -1,36 +1,51 @@
-package com.example.hrbusteschool.Class;
+package com.example.hrbusteschool.WebClass;
+
+import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
-/**
- * 使用get方法获取Http服务器数据
- */
-
-public class WebServiceGet {
-
-    public static String executeHttpGet(String username,String password,String address){
+public class RegisterPost {
+    public static String executeHttpPost(String username,String password,String tel,String sex,String address){
         HttpURLConnection connection = null;
         InputStream in = null;
 
         try{
             //String Url = "http://192.168.3.4:3389/helloweb/" + address;
             String Url = "http://49.233.85.114:8080/helloweb/" + address;
-            String path = Url + "?username=" + username + "&password=" + password;
             try {
-                URL url = new URL(path);
+                URL url = new URL(Url);
                 connection = (HttpURLConnection)url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setConnectTimeout(10000);//建立连接超时
+
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
                 connection.setReadTimeout(8000);//传递数据超时
 
-                in = connection.getInputStream();
-                return parseInfo(in);
+                connection.setUseCaches(false);
+                connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+
+                connection.connect();
+
+                DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                String data = "username=" + URLEncoder.encode(username,"UTF-8") + "&password=" + URLEncoder.encode(password,"UTF-8")+ "&tel=" + URLEncoder.encode(tel,"UTF-8");
+                out.writeBytes(data);
+                out.flush();
+                out.close();
+
+                int resultCode = connection.getResponseCode();
+                if(HttpURLConnection.HTTP_OK == resultCode) {
+                    in = connection.getInputStream();
+                    return parseInfo(in);
+                }
+                return null;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -53,7 +68,6 @@ public class WebServiceGet {
         }
         return null;
     }
-
     //得到字节输入流，将字节输入流转化为String类型
     public static String parseInfo(InputStream inputStream){
         BufferedReader reader = null;
@@ -63,8 +77,10 @@ public class WebServiceGet {
         try {
             reader = new BufferedReader(new InputStreamReader(inputStream));
             while((line = reader.readLine()) != null){
+                Log.d("RegisterActivity",line);
                 response.append(line);
             }
+            Log.d("RegisterActivity","response.toString():"+response.toString());
             return response.toString();
         }catch (Exception e){
             e.printStackTrace();

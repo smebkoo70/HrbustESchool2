@@ -24,7 +24,7 @@ public class MyListAdapter extends BaseAdapter {
     private LayoutInflater mlayoutInflater;
     List<String> mtitle;
     private List<ItemInfo> mList;
-
+    public int PostItemNum = 10;
     private MyClickListener mListener;//所有listview的item共用同一个
     //自定义接口，用于回调按钮点击事件到Activity
     public interface MyClickListener{
@@ -49,7 +49,7 @@ public class MyListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 20;
+        return PostItemNum;
     }
 
     @Override

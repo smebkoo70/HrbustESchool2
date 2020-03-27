@@ -8,17 +8,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 
-
-
 import com.example.hrbusteschool.Activity.LoginActivity;
+import com.example.hrbusteschool.Activity.PersonSettingsActivity;
 import com.example.hrbusteschool.Adapter.MyListAdapter;
+import com.example.hrbusteschool.Adapter.PersonPageAdapter;
+import com.example.hrbusteschool.Class.ActivityCollectorUtil;
 import com.example.hrbusteschool.R;
 
 import java.util.ArrayList;
@@ -41,11 +44,16 @@ public class PersonalFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ListView listView;
+    private TextView NickNametv;
+    private String NickNameSql;
+    private ImageView settingimageview;
+    public Button ExitButton;
     View view;
     private OnFragmentInteractionListener mListener;
     MyListAdapter myListAdapter;
     ImageView imageView_touxiang;
     private ArrayList arrayList;
+
     public PersonalFragment() {
         // Required empty public constructor
     }
@@ -82,11 +90,46 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_personal, container, false);
+        listView = view.findViewById(R.id.perlv);
+        NickNametv = view.findViewById(R.id.textView6);
+        settingimageview = view.findViewById(R.id.setimage);
+        ExitButton = view.findViewById(R.id.exitbtn);
+        PersonPageAdapter personPageAdapter = new PersonPageAdapter(getContext());
         imageView_touxiang = view.findViewById(R.id.ps_imageView);
+        /*if (LoginActivity.LogStatus == false)
+        {
+            ExitButton.setText("您还未登录");
+        }
+        else if(LoginActivity.LogStatus == true)
+        {
+            ExitButton.setText("退出登录");
+        }*/
         imageView_touxiang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Intent intent = new Intent(PersonalFragment.this, LoginActivity.class);
+            }
+        });
+        listView.setAdapter(personPageAdapter);
+        ExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (LoginActivity.LogStatus == false) {
+                    Toast toast = Toast.makeText(getContext(),"您还未登录",Toast.LENGTH_SHORT);
+                    toast.show();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                if (LoginActivity.LogStatus == true) {
+                    ExitButton.setText("退出登录");
+                    LoginActivity.LogStatus = false;
+                    Toast toast = Toast.makeText(getContext(),"退出成功",Toast.LENGTH_SHORT);
+                    toast.show();
+                    ActivityCollectorUtil.finishAllActivity();
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
         return view;
@@ -99,6 +142,7 @@ public class PersonalFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -112,10 +156,38 @@ public class PersonalFragment extends Fragment {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Toast.makeText(getActivity(), "success2", 0).show();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                if (LoginActivity.LogStatus == false) {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                if (LoginActivity.LogStatus == true) {
+
+                }
+
             }
         });
+        settingimageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (LoginActivity.LogStatus == false) {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    //Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    //startActivity(intent);
+                }
+                if (LoginActivity.LogStatus == true) {
+                    Intent intent = new Intent(getActivity(), PersonSettingsActivity.class);
+                    startActivity(intent);
+
+                }
+            }
+        });
+
+
+    }
+
+    public void InitName() {
+        NickNameSql = "select nickname from userinfo where";
     }
 
     @Override
@@ -135,6 +207,12 @@ public class PersonalFragment extends Fragment {
         mListener = null;
     }
 
+
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

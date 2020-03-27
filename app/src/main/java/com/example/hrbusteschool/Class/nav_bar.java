@@ -36,6 +36,7 @@ public class nav_bar extends LinearLayout  {
 
     public nav_bar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
         init(context, attrs);
     }
 
@@ -43,7 +44,9 @@ public class nav_bar extends LinearLayout  {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
-
+    /*public nav_bar(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }*/
 
     private void init(Context context, AttributeSet attrs) {
         if(attrs==null){

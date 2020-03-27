@@ -12,8 +12,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.hrbusteschool.Class.WebServiceGet;
+
+import com.example.hrbusteschool.Class.ActivityCollectorUtil;
+import com.example.hrbusteschool.Fragment.PersonalFragment;
+import com.example.hrbusteschool.WebClass.WebServiceGet;
 import com.example.hrbusteschool.R;
 
 import java.security.MessageDigest;
@@ -33,12 +37,10 @@ public class LoginActivity extends AppCompatActivity {
     //服务器返回的数据
     private String infoString;
 
-    Button Login_Button;
+    Button Login_Button,Register_Button;
     TextView Forgot_textView,Register_textView,back_textView;
 
     private CheckBox rembox;
-
-
 
 
     private SharedPreferences pref;
@@ -52,49 +54,25 @@ public class LoginActivity extends AppCompatActivity {
     private final int REGISTERNOTFOUND=4;
     private final int REGISTEREXCEPT=5;
     private String usernameStr,passwordStr,remname,rempwd;
-    /*@SuppressLint("HandlerLeak")
-    Handler handler=new Handler()
-    {//消息机制，用来在子线程中更新UI
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){//具体消息，具体显示
-                case LOGINSUCCESS:
-                    Toast.makeText(getApplicationContext(),(String)msg.obj,Toast.LENGTH_LONG).show();
-                    break;
-                case LOGINNOTFOUND:
-                    Toast.makeText(getApplicationContext(),(String)msg.obj,Toast.LENGTH_LONG).show();
-                    break;
-                case LOGINEXCEPT:
-                    Toast.makeText(getApplicationContext(),(String)msg.obj,Toast.LENGTH_LONG).show();
-                    break;
-                case REGISTERSUCCESS:
-                    Toast.makeText(getApplicationContext(),(String)msg.obj,Toast.LENGTH_LONG).show();
-                    break;
-                case REGISTERNOTFOUND:
-                    Toast.makeText(getApplicationContext(),(String)msg.obj,Toast.LENGTH_LONG).show();
-                    break;
-                case REGISTEREXCEPT:
-                    Toast.makeText(getApplicationContext(),(String)msg.obj,Toast.LENGTH_LONG).show();
-                    break;
-            }
-        }
-    };*/
+    public static Boolean LogStatus = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCollectorUtil.addActivity(this);
         setContentView(R.layout.activity_login2);
-        Register_textView = findViewById(R.id.register);
+        //Register_textView = findViewById(R.id.register);
         Forgot_textView = findViewById(R.id.forgot_ps);
-        back_textView = findViewById(R.id.textView_back);
+        //back_textView = findViewById(R.id.textView_back);
         Login_Button = findViewById(R.id.LoginButton);
+        Register_Button = findViewById(R.id.register);
         usertextview = (EditText) findViewById(R.id.usertextview);
         pwdtextview = (EditText) findViewById(R.id.pwdtextview);
         rembox = (CheckBox) findViewById(R.id.rememberbox);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isRemember = pref.getBoolean("rememberbox",false);
+        final boolean isRemember = pref.getBoolean("rememberbox",false);
 
         //当点击了记住密码后执行下面的步骤
         if(isRemember){
@@ -106,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             rembox.setChecked(true);
         }
 
-        Register_textView.setOnClickListener(new View.OnClickListener() {
+        Register_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -119,16 +97,16 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("LoginActivity","textview forgot已经点击");
                 Toast toast = Toast.makeText(LoginActivity.this,"敬请期待",Toast.LENGTH_SHORT);
                 toast.show();
-                Intent testwebvintent = new Intent(LoginActivity.this,TestWebViewActivity.class);
-                startActivity(testwebvintent);
+                //Intent testwebvintent = new Intent(LoginActivity.this,TestNavBarActivity.class);
+                //startActivity(testwebvintent);
             }
         });
-        back_textView.setOnClickListener(new View.OnClickListener() {
+        /*back_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
         Login_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +128,15 @@ public class LoginActivity extends AppCompatActivity {
                         //设置子线程，分别进行Get和Post传输数据
                         new Thread(new MyThread()).start();
 
+                        //当点击了记住密码后执行下面的步骤
+                        if(isRemember){
+                            remname = pref.getString("usernameStr","");
+                            rempwd = pref.getString("passwordStr","");
+
+                            usertextview.setText(remname);
+                            pwdtextview.setText(rempwd);
+                            rembox.setChecked(true);
+                        }
 
                         //TestLogin();
                     } catch (Exception e) {
@@ -194,8 +181,14 @@ public class LoginActivity extends AppCompatActivity {
                         editor.clear();
                     }
                     editor.apply();
-                    Toast.makeText(LoginActivity.this,remname, Toast.LENGTH_SHORT).show();
+
                     Toast.makeText(LoginActivity.this,"登陆成功！", Toast.LENGTH_SHORT).show();
+                    LogStatus = true;
+
+                    Toast.makeText(LoginActivity.this,remname+rempwd, Toast.LENGTH_SHORT).show();
+                    finish();
+
+                    //Activity.finish
 
                 }
                 dialog.dismiss();

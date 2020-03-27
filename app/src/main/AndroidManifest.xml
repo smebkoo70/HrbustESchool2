@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.TestNavBarActivity"></activity>
+        <activity
+            android:name=".Activity.PersonSettingsActivity"
+            android:label="@string/title_activity_person_settings"></activity>
+        <activity android:name=".Activity.TestReFreshActivity" />
 
         <meta-data
             android:name="com.google.android.actions"
@@ -21,6 +24,7 @@
 
         <activity android:name=".Activity.SendPostActivity" />
         <activity android:name=".Activity.TestWebViewActivity" />
+        <activity android:name=".Activity.TestNavBarActivity" />
         <activity android:name=".Activity.InvitationActivity" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.LoginActivity" />

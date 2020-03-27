@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements PersonalFragment.
     // PersonalFragment personalFragmenthome;
     ViewPager viewPager;
     List<Fragment> fragments = new ArrayList<>();
+    private PersonalFragment personalFragment;
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -89,6 +90,10 @@ public class MainActivity extends AppCompatActivity implements PersonalFragment.
 
             }
         });
+
     }
+
+
+
 
 }

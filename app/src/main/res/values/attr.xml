@@ -28,12 +28,4 @@
         <attr name="right_icon" format="reference"></attr>
     </declare-styleable>
 
-    <resources>
-        <declare-styleable name="test">
-            <attr name="text" format="string" />
-            <attr name="testAttr" format="integer" />
-        </declare-styleable>
-    </resources>
-
-
 </resources>
