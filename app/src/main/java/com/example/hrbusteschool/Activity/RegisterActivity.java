@@ -44,6 +44,10 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton sexradioWomen;
     private RadioButton radioButton;
     private ImageView codeimage;
+    private Button registerBtnCancel;
+
+
+
 
     //生成验证码定义
     private Bitmap bitmap;
@@ -102,12 +106,13 @@ public class RegisterActivity extends AppCompatActivity {
         editTextTel = (EditText) findViewById(R.id.editText_tel);
         editTextCode = (EditText) findViewById(R.id.editText_code);
         editTextConfirmpassword = (EditText) findViewById(R.id.editText_confirmpassword);
-        buttonReset = (Button) findViewById(R.id.button_reset);
+        //buttonReset = (Button) findViewById(R.id.button_reset);
         buttonSumbit = (Button) findViewById(R.id.button_sumbit);
         radiogroupSex = (RadioGroup) findViewById(R.id.radiogroup_sex);
         sexradioMan = (RadioButton) findViewById(R.id.sexradio_man);
         sexradioWomen = (RadioButton) findViewById(R.id.sexradio_women);
         codeimage = (ImageView) findViewById(R.id.codeimage);
+        registerBtnCancel = (Button) findViewById(R.id.register_btn_cancel);
 
         //获取工具类生成的图片验证码对象
         bitmap = CodeUtils.getInstance().createBitmap();
@@ -125,20 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-        //清空屏幕
-        buttonReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClearRegisterInfo();
-                /*editTextUsername.setText("");
-                editTextConfirmpassword.setText("");
-                editTextPassword.setText("");
-                editTextTel.setText("");
-                editTextCode.setText("");
-                sexradioMan.setChecked(false);
-                sexradioWomen.setChecked(false);*/
-            }
-        });
+
         radiogroupSex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -303,3 +295,4 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 }
+//清空屏幕

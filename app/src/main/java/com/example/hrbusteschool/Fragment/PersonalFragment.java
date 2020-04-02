@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +55,43 @@ public class PersonalFragment extends Fragment {
     MyListAdapter myListAdapter;
     ImageView imageView_touxiang;
     private ArrayList arrayList;
+    private TextView t_name;
+    private TextView t_number;
+    private Button btn_quit;
+
+
+
+
+    private LinearLayout head;
+    private ImageView psImageView;
+    private TextView textView8;
+    private TextView tName;
+    private TextView textView9;
+    private TextView tNumber;
+    private LinearLayout presonData;
+    private ImageView imageView2;
+    private LinearLayout secondlayout;
+    private ImageView imageView6;
+    private LinearLayout notification;
+    private ImageView imageView7;
+    private LinearLayout feedback;
+    private ImageView imageView8;
+    private View view9;
+    private LinearLayout meShare;
+    private ImageView imageView9;
+    private LinearLayout about;
+    private ImageView imageView10;
+    private LinearLayout settinglayout;
+    private ImageView imageView11;
+    private Button exitbtn;
+
+
+
+
+
+    Handler mTimeHandler;
+
+    private  String imageUrl;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -90,12 +129,44 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_personal, container, false);
-        listView = view.findViewById(R.id.perlv);
+
+        head = view.findViewById(R.id.head);
+        psImageView = view.findViewById(R.id.ps_imageView);
+        textView8 = view.findViewById(R.id.textView8);
+        tName = view.findViewById(R.id.t_name);
+        textView9 = view.findViewById(R.id.textView9);
+        tNumber = view.findViewById(R.id.t_number);
+        presonData = view.findViewById(R.id.preson_data);
+        imageView2 = view.findViewById(R.id.imageView2);
+        secondlayout = view.findViewById(R.id.secondlayout);
+        imageView6 = view.findViewById(R.id.imageView6);
+        notification = view.findViewById(R.id.notification);
+        imageView7 = view.findViewById(R.id.imageView7);
+        feedback = view.findViewById(R.id.feedback);
+        imageView8 = view.findViewById(R.id.imageView8);
+        view9 = view.findViewById(R.id.view9);
+        meShare = view.findViewById(R.id.me_share);
+        imageView9 = view.findViewById(R.id.imageView9);
+        about = view.findViewById(R.id.about);
+        imageView10 = view.findViewById(R.id.imageView10);
+        settinglayout = view.findViewById(R.id.settinglayout);
+        imageView11 = view.findViewById(R.id.imageView11);
+        exitbtn = view.findViewById(R.id.exitbtn);
+
+        //view = inflater.inflate(R.layout.fragment_personal_beifen, container, false);
+        /*listView = view.findViewById(R.id.perlv);
         NickNametv = view.findViewById(R.id.textView6);
         settingimageview = view.findViewById(R.id.setimage);
         ExitButton = view.findViewById(R.id.exitbtn);
         PersonPageAdapter personPageAdapter = new PersonPageAdapter(getContext());
-        imageView_touxiang = view.findViewById(R.id.ps_imageView);
+        imageView_touxiang = view.findViewById(R.id.ps_imageView);*/
+        /*presonData = (LinearLayout) view.findViewById(R.id.preson_data);
+        secondlayout = (LinearLayout) view.findViewById(R.id.secondlayout);
+        notification = (LinearLayout) view.findViewById(R.id.notification);
+        feedback = (LinearLayout) view.findViewById(R.id.feedback);
+        meShare = (LinearLayout) view.findViewById(R.id.me_share);
+        about = (LinearLayout) view.findViewById(R.id.about);
+        settinglayout = (LinearLayout) view.findViewById(R.id.settinglayout);*/
         /*if (LoginActivity.LogStatus == false)
         {
             ExitButton.setText("您还未登录");
@@ -110,7 +181,7 @@ public class PersonalFragment extends Fragment {
                 //Intent intent = new Intent(PersonalFragment.this, LoginActivity.class);
             }
         });
-        listView.setAdapter(personPageAdapter);
+        //listView.setAdapter(personPageAdapter);
         ExitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +220,25 @@ public class PersonalFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-        imageView_touxiang.setOnClickListener(new View.OnClickListener() {
+        /*imageView_touxiang.setOnClickListener(new View.OnClickListener() {
+
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Toast.makeText(getActivity(), "success2", 0).show();
+                if (LoginActivity.LogStatus == false) {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                if (LoginActivity.LogStatus == true) {
+
+                }
+
+            }
+        });*/
+
+        psImageView.setOnClickListener(new View.OnClickListener() {
 
             @SuppressLint("WrongConstant")
             @Override
@@ -166,7 +255,8 @@ public class PersonalFragment extends Fragment {
 
             }
         });
-        settingimageview.setOnClickListener(new View.OnClickListener() {
+
+        settinglayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (LoginActivity.LogStatus == false) {
