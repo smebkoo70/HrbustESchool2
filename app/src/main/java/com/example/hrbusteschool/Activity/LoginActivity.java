@@ -16,9 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hrbusteschool.Class.ActivityCollectorUtil;
-import com.example.hrbusteschool.Fragment.PersonalFragment;
-import com.example.hrbusteschool.WebClass.WebServiceGet;
 import com.example.hrbusteschool.R;
+import com.example.hrbusteschool.WebClass.WebServiceGet;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -45,6 +44,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences pref;
 
+    SharedPreferences sp2;
+
+
+
     private SharedPreferences.Editor editor;
     private String userNameValue,passwordValue;
     private final int LOGINSUCCESS=0;
@@ -70,19 +73,22 @@ public class LoginActivity extends AppCompatActivity {
         usertextview = (EditText) findViewById(R.id.usertextview);
         pwdtextview = (EditText) findViewById(R.id.pwdtextview);
         rembox = (CheckBox) findViewById(R.id.rememberbox);
-
+        sp2 = getSharedPreferences("Logindb",MODE_PRIVATE);
+        if(sp2.getBoolean("save",false)==true  ){    //判断是否写入了数值save==true
+            getDB();
+        }
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         final boolean isRemember = pref.getBoolean("rememberbox",false);
 
         //当点击了记住密码后执行下面的步骤
-        if(isRemember){
+        /*if(isRemember){
             remname = pref.getString("usernameStr","");
             rempwd = pref.getString("passwordStr","");
 
             usertextview.setText(remname);
             pwdtextview.setText(rempwd);
             rembox.setChecked(true);
-        }
+        }*/
 
         Register_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,14 +135,14 @@ public class LoginActivity extends AppCompatActivity {
                         new Thread(new MyThread()).start();
 
                         //当点击了记住密码后执行下面的步骤
-                        if(isRemember){
+                        /*if(isRemember){
                             remname = pref.getString("usernameStr","");
                             rempwd = pref.getString("passwordStr","");
 
                             usertextview.setText(remname);
                             pwdtextview.setText(rempwd);
                             rembox.setChecked(true);
-                        }
+                        }*/
 
                         //TestLogin();
                     } catch (Exception e) {
@@ -167,25 +173,26 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.equals("false")){
                     Toast.makeText(LoginActivity.this,"登陆失败,用户名或密码错误", Toast.LENGTH_SHORT).show();
                 }else {
+                    if(rembox.isChecked())
+                    {
+                        saveDB();
+                    }
                     //info.setText(response);
-                    editor = pref.edit();
+                    /*editor = pref.edit();
                     if (rembox.isChecked()) {
-                        /*editor.putBoolean("rememberbox", true);
-                        editor.putString("usernameStr", remname);
-                        editor.putString("passwordStr", rempwd);*/
-                        //editor.putBoolean("rememberbox", true);
+
                         editor.putString("usernameStr", userNameValue);
                         editor.putString("passwordStr", passwordValue);
                         editor.commit();
                     } else {
                         editor.clear();
                     }
-                    editor.apply();
+                    editor.apply();*/
 
                     Toast.makeText(LoginActivity.this,"登陆成功！", Toast.LENGTH_SHORT).show();
                     LogStatus = true;
 
-                    Toast.makeText(LoginActivity.this,remname+rempwd, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this,remname+rempwd, Toast.LENGTH_SHORT).show();
                     finish();
 
                     //Activity.finish
@@ -247,6 +254,32 @@ public class LoginActivity extends AppCompatActivity {
             return null;
         }
     }
+    //清除
+    private void clearDB(){
+        SharedPreferences sp=getSharedPreferences("Logindb",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.clear();
+        editor.commit();
+    }
+    //保存数据
+    private void saveDB(){
+        SharedPreferences sp=getSharedPreferences("Logindb",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putString("usertextview",usertextview.getText().toString());
+        editor.putString("pwdtextview",pwdtextview.getText().toString());
+        editor.putBoolean("save",true);
+        editor.commit();            //写入数据
+        Toast.makeText(LoginActivity.this,"sd",Toast.LENGTH_LONG).show();
+    }
+    //读取数据
+    private void getDB(){
+        SharedPreferences sp=getSharedPreferences("Logindb",MODE_PRIVATE);
+        String name= sp.getString("usertextview","");
+        String password=sp.getString("pwdtextview","");
+        usertextview.setText(name);
+        pwdtextview.setText(password);
+    }
+
 
 
 

@@ -15,8 +15,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hrbusteschool.Class.CodeUtils;
-import com.example.hrbusteschool.WebClass.RegisterGet;
 import com.example.hrbusteschool.R;
+import com.example.hrbusteschool.WebClass.RegisterGet;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

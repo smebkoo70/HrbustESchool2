@@ -35,9 +35,23 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/btn_bg_round_click" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.hrbusteschool.Activity.file.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
     </application>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <!--读写内存块权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--调用相机权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>

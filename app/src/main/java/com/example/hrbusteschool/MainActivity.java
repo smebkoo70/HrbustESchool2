@@ -1,7 +1,19 @@
 package com.example.hrbusteschool;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.hrbusteschool.Adapter.FragmentAdapter;
 import com.example.hrbusteschool.Fragment.LuntanFragment;
@@ -9,14 +21,6 @@ import com.example.hrbusteschool.Fragment.NewPersonFragment;
 import com.example.hrbusteschool.Fragment.PersonalFragment;
 import com.example.hrbusteschool.Fragment.newsfragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
-import android.view.MenuItem;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,18 @@ public class MainActivity extends AppCompatActivity implements PersonalFragment.
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    void Request() {
+        //获取相机拍摄读写权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //版本判断
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA}, 1);
+            }
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -59,10 +75,12 @@ public class MainActivity extends AppCompatActivity implements PersonalFragment.
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Request();
 
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
