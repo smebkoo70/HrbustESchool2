@@ -44,8 +44,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences pref;
 
-    SharedPreferences sp2;
-
+    public static SharedPreferences sp2;
+    public static SharedPreferences sp;
+    public static String uname;
 
 
     private SharedPreferences.Editor editor;
@@ -256,28 +257,29 @@ public class LoginActivity extends AppCompatActivity {
     }
     //清除
     private void clearDB(){
-        SharedPreferences sp=getSharedPreferences("Logindb",MODE_PRIVATE);
+        sp=getSharedPreferences("Logindb",MODE_PRIVATE);
         SharedPreferences.Editor editor=sp.edit();
         editor.clear();
         editor.commit();
     }
     //保存数据
     private void saveDB(){
-        SharedPreferences sp=getSharedPreferences("Logindb",MODE_PRIVATE);
+        sp=getSharedPreferences("Logindb",MODE_PRIVATE);
         SharedPreferences.Editor editor=sp.edit();
         editor.putString("usertextview",usertextview.getText().toString());
         editor.putString("pwdtextview",pwdtextview.getText().toString());
         editor.putBoolean("save",true);
         editor.commit();            //写入数据
-        Toast.makeText(LoginActivity.this,"sd",Toast.LENGTH_LONG).show();
+        //Toast.makeText(LoginActivity.this,"sd",Toast.LENGTH_LONG).show();
     }
     //读取数据
-    private void getDB(){
-        SharedPreferences sp=getSharedPreferences("Logindb",MODE_PRIVATE);
+    public void getDB(){
+        sp=getSharedPreferences("Logindb",MODE_PRIVATE);
         String name= sp.getString("usertextview","");
         String password=sp.getString("pwdtextview","");
         usertextview.setText(name);
         pwdtextview.setText(password);
+        uname = name;
     }
 
 

@@ -25,6 +25,7 @@ import androidx.core.content.FileProvider;
 import com.example.hrbusteschool.Class.FileManager;
 import com.example.hrbusteschool.Class.PermissionManager;
 import com.example.hrbusteschool.R;
+import com.example.hrbusteschool.WebClass.InitPersonFragGet;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,6 +62,9 @@ public class EditPersonInfoActivity extends AppCompatActivity {
     private EditText dnumber;
     private EditText says;
     private Button pSub;
+
+
+    public static String LoginUsername;
 
     private static final int REQUEST_CODE_ALBUM = 100;//打开相册
     private static final int REQUEST_CODE_CAMERA = 101;//打开相机
@@ -203,12 +207,26 @@ public class EditPersonInfoActivity extends AppCompatActivity {
     }
 
 
+    private void getUsername()
+    {
+        LoginUsername = LoginActivity.uname;
+    }
 
+
+    private void InitInfo()
+    {
+        InitPersonFragGet.executeHttpGet(LoginUsername,"TestServlet");
+        //Toast toast = Toast.makeText(EditPersonInfoActivity.this,LoginUsername,Toast.LENGTH_SHORT);
+        //toast.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_person_info);
+        new Thread(new MyThread()).start();
+
+
         backBtn = (ImageButton) findViewById(R.id.back_btn);
         headIcon = (ImageView) findViewById(R.id.head_icon);
         buttonChangeimg = (Button) findViewById(R.id.button_changeimg);
@@ -237,6 +255,7 @@ public class EditPersonInfoActivity extends AppCompatActivity {
         dnumber = (EditText) findViewById(R.id.dnumber);
         says = (EditText) findViewById(R.id.says);
         pSub = (Button) findViewById(R.id.p_sub);
+        InitInfo();
         buttonChangeimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -255,5 +274,12 @@ public class EditPersonInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public class MyThread implements Runnable {
+        @Override
+        public void run() {
+            getUsername();
+            InitInfo();
+        }
     }
 }
