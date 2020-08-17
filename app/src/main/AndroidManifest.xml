@@ -4,20 +4,20 @@
 
     <application
         android:allowBackup="true"
+
         android:icon="@mipmap/ic_launcher"
         android:label="HrbustESchool"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.EditPersonInfoActivity"></activity>
+        <activity android:name=".Activity.RecyclerViewTestActivity"></activity>
+        <activity android:name=".Activity.EditPersonInfoActivity" />
         <activity
             android:name=".Activity.PersonSettingsActivity"
             android:label="@string/title_activity_person_settings" />
         <activity android:name=".Activity.TestReFreshActivity" />
-
         <activity android:name=".Activity.SendPostActivity" />
-
         <activity android:name=".Activity.TestWebViewActivity" />
         <activity android:name=".Activity.TestNavBarActivity" />
         <activity android:name=".Activity.InvitationActivity" />
@@ -32,9 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/btn_bg_round_click" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.hrbusteschool.Activity.file.provider"
@@ -42,16 +44,13 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
-
-    </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--读写内存块权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--调用相机权限-->
+    </application> <!-- 读写内存块权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 调用相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

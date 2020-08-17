@@ -8,14 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.hrbusteschool.Class.ItemInfo;
-import com.example.hrbusteschool.R;
+import com.example.hrbusteschool.JavaBean.ItemInfo;
 import com.example.hrbusteschool.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import com.example.hrbusteschool.Class.ItemInfo;
 
 //本adapter的作用是被论坛模块调用
 public class MyListAdapter extends BaseAdapter {

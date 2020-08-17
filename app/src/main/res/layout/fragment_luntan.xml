@@ -5,22 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    android:id="@+id/frameLayout">
+    android:id="@+id/frameLayout1">
 
     <!-- TODO: Update blank fragment layout -->
 
 
-    <ListView
-        android:id="@+id/luntan_listview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:divider="@color/colorGrayDark"
-        tools:layout_conversion_absoluteHeight="731dp"
-        tools:layout_conversion_absoluteWidth="411dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
-    </ListView>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:background="#fff" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <Button
         android:id="@+id/addbutton"

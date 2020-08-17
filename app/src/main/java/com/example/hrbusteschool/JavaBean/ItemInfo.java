@@ -1,4 +1,4 @@
-package com.example.hrbusteschool.Class;
+package com.example.hrbusteschool.JavaBean;
 
 import android.widget.TextView;
 //listview的内部组件
